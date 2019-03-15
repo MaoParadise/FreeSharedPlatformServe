@@ -49,7 +49,8 @@ app.use(passport.session())
 
 
 // Routes
-app.use('/', require('./routes/indexRoutes'));
+//app.use('/',  require('./routes/indexRoutes'));
+app.use('/', express.static(path.join(__dirname, '../production/')));
 app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 
@@ -57,4 +58,5 @@ app.use('/api/user', require('./routes/userRoutes'));
 // Starting the server
 app.listen(app.get('port'), () =>{
     console.log('Server on port', app.get('port'));
+
 });
