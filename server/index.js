@@ -20,7 +20,7 @@ app.set('json spaces', 4);
 
 // Middlewares 
 app.use(cors({
-    origin: ['http://localhost:4200', 'http://127.0.0.1:4200'],
+    origin: ['http://localhost:4200', 'http://127.0.0.1:4200', 'http://homeclean.cl'],
     credentials: true
 }))
 
