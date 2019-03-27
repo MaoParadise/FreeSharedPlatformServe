@@ -16,7 +16,6 @@ uploadCtrl.getUpload = async (req, res) => {
 uploadCtrl.createUpload = async (req, res) => {
     const upload = new Upload({
         _idUser: req.body._idUser,
-        _idMedia: req.body._idMedia,
         episode: req.body.episode, 
         dateUpload: req.body.dateUpload,
         updateUpload: req.body.updateUpload,

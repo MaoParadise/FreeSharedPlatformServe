@@ -4,19 +4,13 @@ const passport = require('passport');
 
 const user = require('../controllers/userController');
 const { isAuthenticated,verifyToken, checkCredentials } = require('../helpers/auth');
-
 const User = require('../models/user/user');
 const jwt = require('jsonwebtoken');
 
-
-
 router.get('/', isAuthenticated, verifyToken, user.getUsers);
-router.get('/:id', user.getUser);
 router.post('/', user.createLocalUser);
-router.put('/:id', user.editUser);
+router.put('/', user.editUser);
 router.delete('/:id', user.deleteUser);
-
-
 
 router.post('/auth/signin', (req, res, next) => {
     passport.authenticate('local-login', {
@@ -78,4 +72,9 @@ router.get('/auth/logout', isAuthenticated, (req, res) => {
     })
 });
  
+router.get('/auth/session', user.verifyIdentity);
+
+
+router.post('/current', isAuthenticated, verifyToken, user.getCurrentUser);
+
 module.exports = router;

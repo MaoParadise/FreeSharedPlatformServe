@@ -35,6 +35,7 @@ helpers.checkCredentials = (req, res, next) =>{
 
     if(sessionCredentials === true && tokenCredentials === true){
         return res.status(200).json({
+            response: req.headers,
             status : `Credentials are available`,
             success : true,
         })

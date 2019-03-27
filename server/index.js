@@ -20,7 +20,7 @@ app.set('json spaces', 4);
 
 // Middlewares 
 app.use(cors({
-    origin: ['http://localhost:4200', 'http://127.0.0.1:4200', 'http://homeclean.cl','http://localhost'],
+    origin: ['http://localhost','http://192.168.0.18','http://localhost:4200', 'http://127.0.0.1:4200'],
     credentials: true
 }))
 
@@ -36,12 +36,15 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie:{
-        maxAge: 36000000,
+        maxAge: 36000000*10,
         httpOnly: false,
         secure: false
     },
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
+
+
+
 require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session())
@@ -49,9 +52,9 @@ app.use(passport.session())
 
 
 // Routes
-//app.use('/',  require('./routes/indexRoutes'));
-app.use('/', express.static(path.join(__dirname, '../production/')));
+app.use('/',  require('./routes/indexRoutes'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
+app.use('/api/media', require('./routes/mediaRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 
 

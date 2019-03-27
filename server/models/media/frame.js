@@ -1,8 +1,8 @@
 const frameClass = {
-        embedFrame: { type: String, required: true },
-        urlFrame: { type: String, required: true },
-        quality: { type: String, required: true },
-        statusFrame: { type: Number, required : true }
+        embedFrame: { type: String },
+        urlFrame: { type: String },
+        quality: { type: String },
+        statusFrame: { type: Number }
 }
 
 module.exports = frameClass;
