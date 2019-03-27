@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
+ 
 const express = require('express');
 const path = require('path')
 const morgan = require('morgan');
@@ -31,11 +35,21 @@ app.use(express.urlencoded({extended: false}))
 
 const  storage = multer.diskStorage({
     destination: path.join(__dirname, 'public/uploads'),
-    filename: (req, file, cb)=> {
+     filename: (req, file, cb)=> {
         cb(null, new Date().getTime() + path.extname(file.originalname));
-    }
+    } 
 });
-app.use(multer({storage}).single('image'));
+app.use(multer({
+    storage,
+    fileFilter: function (req, file, next) {
+        var ext = path.extname(file.originalname);
+        if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+            next({ message: "not valid type of file" }, false);
+        }else{
+            next(null, true);
+        }
+    }
+}).single('image'));
 
 
 app.use(cookieParser());
@@ -71,5 +85,5 @@ app.use('/api/user', require('./routes/userRoutes'));
 // Starting the server
 app.listen(app.get('port'), () =>{
     console.log('Server on port', app.get('port'));
-
+    console.log('Envionment:', process.env.NODE_ENV)
 });
