@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path')
 const morgan = require('morgan');
+const multer = require('multer');
 const cors = require('cors');
 const app = express();
 
@@ -26,10 +27,21 @@ app.use(cors({
 
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({extended: false}))
+
+const  storage = multer.diskStorage({
+    destination: path.join(__dirname, 'public/uploads'),
+    filename: (req, file, cb)=> {
+        cb(null, new Date().getTime() + path.extname(file.originalname));
+    }
+});
+app.use(multer({storage}).single('image'));
+
+
 app.use(cookieParser());
 
-const MongoStore = require('connect-mongo')(session);
 
+const MongoStore = require('connect-mongo')(session);
 app.use(session({
     name: '-tak-id',
     secret: 'BakoParadise57145894',
@@ -42,8 +54,6 @@ app.use(session({
     },
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
-
-
 
 require('./config/passport');
 app.use(passport.initialize());
