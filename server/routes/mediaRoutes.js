@@ -21,6 +21,8 @@ router.post('/', media.createUpload);
 
 router.post('/find/title', media.getMediaByTitle);
 
+router.get('/find/id', media.getMediaById);
+
 router.post('/images/add', async (req, res)=> {
     const {title} = req.body;
     if(req.file.size > 1048576){
