@@ -34,7 +34,6 @@ mediaCtrl.createUpload = async (req, res) => {
         media.releaseDate = releaseDate;
         media.statusMedia = 200
         
-        
         if(req.file === null || req.file === undefined){
             media.miniature_id = 'no-id';
             media.miniature = '';
@@ -46,9 +45,10 @@ mediaCtrl.createUpload = async (req, res) => {
         } 
 
         await media.save();
-        
+
         return res.json({ 
             'status': 'Media Saved',
+            '_id': media._id,
             'success' : true
         });
     }catch(err){
@@ -59,6 +59,28 @@ mediaCtrl.createUpload = async (req, res) => {
         });
     }
     
+}
+
+mediaCtrl.pushReferences = async (req, res) => {
+    try{
+        const { id, references } = req.body;
+        await Media.findByIdAndUpdate(id, 
+        { 
+            references: references
+        }
+        );
+    
+        res.json({
+            status: 'References updated',
+            'success' : true
+        })
+    }catch(err){
+        return res.status(401).json({
+            'status': 'Failure',
+            'error': err,
+            'success' : false
+        });
+    }
 }
 
 module.exports = mediaCtrl;
