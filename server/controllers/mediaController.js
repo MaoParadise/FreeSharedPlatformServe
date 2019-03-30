@@ -61,6 +61,10 @@ mediaCtrl.createUpload = async (req, res) => {
     
 }
 
+mediaCtrl.pushFrame = async (req, res) =>{
+    
+}
+
 mediaCtrl.pushReferences = async (req, res) => {
     try{
         const { id, references } = req.body;
