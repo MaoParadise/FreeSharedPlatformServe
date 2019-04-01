@@ -87,4 +87,47 @@ mediaCtrl.pushReferences = async (req, res) => {
     }
 }
 
+
+mediaCtrl.modifiedMedia = async (req, res) => {
+    try{
+        const { _id, 
+            title, 
+            studio, 
+            statusMedia, 
+            releaseDate, 
+            miniature_id, 
+            miniature,
+            description,
+            totalEpisodes,
+            references,
+            upload
+        } = req.body;
+
+        await Media.findByIdAndUpdate(_id, 
+            {
+                title: title,
+                studio: studio,
+                statusMedia: 200,
+                releaseDate: releaseDate,
+                miniature_id: miniature_id,
+                miniature: miniature,
+                description: description,
+                totalEpisodes: totalEpisodes,
+                references: references,
+                upload: upload
+            });
+        res.json({
+            status: 'Media updated',
+            'success' : true
+        })
+    }catch(err){
+        return res.status(401).json({
+            'status': 'Failure',
+            'error': err,
+            'success' : false
+        });
+    }
+}
+
+
 module.exports = mediaCtrl;

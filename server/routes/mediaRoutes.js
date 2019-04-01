@@ -6,6 +6,8 @@ const media = require('../controllers/mediaController');
 
 router.post('/',isAuthenticated, media.createUpload);
 
+router.put('/', media.modifiedMedia);
+
 router.post('/find/title',isAuthenticated, media.getMediaByTitle);
 
 router.get('/find/id',isAuthenticated, media.getMediaById);
